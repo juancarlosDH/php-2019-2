@@ -51,17 +51,7 @@ function imprimirProductos () {
     <?php }
 }
 
-function obtenerProductoPorId($id) {
-    $productos = dameProductos();
 
-    foreach ($productos as $producto) {
-        if ($id == (string) $producto['id']) {
-            return $producto;
-        }
-    }
-
-    return false;
-}
 
 
 
