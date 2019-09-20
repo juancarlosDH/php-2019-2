@@ -3,29 +3,32 @@
 function dameProductos () {
 
     $productos = [
-        0 => [
-                "id" => 1,
-                "titulo" => "Lorem Ipsum",
-                "descripcion" => "Lorem Ipsum",
-                "precio" => 300,
-                "imagen" => "img-pdto-1.jpg",
-                "enOferta" => true
+        100 => [
+            "id" => 1,
+            "titulo" => "Vino Tino",
+            "descripcion" => "Lorem Ipsum",
+            "precio" => 300,
+            "imagen" => "img-pdto-1.jpg",
+            "enOferta" => true,
+            'nuevo' => false,
         ],
-        1 => [
-                "id" => 2,
-                "titulo" => "Lorem Ipsum",
-                "descripcion" => "Lorem Ipsum",
-                "precio" => 500,
-                "imagen" => "img-pdto-2.jpg",
-                "enOferta" => false
+        87 => [
+            "id" => 2,
+            "titulo" => "Carne Asada",
+            "descripcion" => "Lorem Ipsum",
+            "precio" => 500,
+            "imagen" => "img-pdto-2.jpg",
+            "enOferta" => false,
+            'nuevo' => true,
         ],
-        2 => [
-                "id" => 3,
-                "titulo" => "Lorem Ipsum",
-                "descripcion" => "Lorem Ipsum",
-                "precio" => 500,
-                "imagen" => "img-pdto-3.jpg",
-                "enOferta" => false
+        50 => [
+            "id" => 3,
+            "titulo" => "Paella",
+            "descripcion" => "Lorem Ipsum",
+            "precio" => 500,
+            "imagen" => "img-pdto-3.jpg",
+            "enOferta" => false,
+            'nuevo' => false,
         ]
     ];
 
@@ -62,9 +65,6 @@ function obtenerProductoPorId($id) {
 
     return false;
 }
-
-
-
 
 
 

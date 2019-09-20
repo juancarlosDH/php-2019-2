@@ -8,11 +8,8 @@
         $email = $_POST['email'];
         $password = $_POST['password'];
         $nombreArchivo = '';
-
         //me faltan las validaciones de formato email, email no repetido, password no vacio y password igual a confirmar password
-
         //si subio un archivo lo guardo en la carpeta avatars
-
         //pregunto si se subio el archivo exitosamente
         if ($_FILES['avatar']['error'] === 0) {
             //pido la extension del archivo
@@ -38,6 +35,7 @@
         $archivo = file_get_contents('usuarios.json');
         //lo transformo a variables en php
         $usuarios = json_decode($archivo, true);
+        
         //agrego el usuario nuevo al array del json
         $usuarios[] = $usuario;
         //convierto ese usuario en JSON para luego mandarlo a guardar

@@ -1,36 +1,28 @@
 <?php
-    $email = '';
-    $errorEmail = '';
+    require_once('funciones/autoload.php');
 
-    $password = '';
-    $errorPassword = '';
-
-    if ($_POST) {
-        $validado = true;
-        $email = trim($_POST['email']);
-        $password = $_POST['password'];
-
-        if (strlen($email) === 0) {
-            $errorEmail = 'Escribe el email';
-            $validado = false;
-        } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $errorEmail = 'El email tiene formato errado';
-            $validado = false;
-        }
-
-        if (strlen($password) < 6) {
-            $errorPassword = 'La contraseña es muy corta (minimo 6 caracteres)';
-            $validado = false;
-        }
-
-        //if (empty($errorEmail) && empty($errorPassword)) {
-        if ($validado) {
-            header('location:miPerfil.php');
-        }
-
+    if(estaElUsuarioLogeado()){
+        header('location:miPerfil.php');
     }
 
-    require_once('funciones/productos.php');
+    $email = '';
+    $password = '';
+
+    $errores = [
+        'email' => '',
+        'password' => ''
+    ];
+
+    if ($_POST) {
+        $email = trim($_POST['email']);
+        $errores = validarLogin($_POST);
+
+        if (!$errores) {
+            header('location:miPerfil.php');
+        }
+    }
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -60,12 +52,12 @@
                 <label for="email">Email address</label>
                 <input type="text" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" name="email"
                 value="<?= $email ?>">
-                <?= $errorEmail ?>
+                <?= (isset($errores['email']) ? $errores['email'] : '') ?>
               </div>
               <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password" placeholder="Password" name="password">
-                <?= $errorPassword ?>
+                <?= (isset($errores['password']) ? $errores['password'] : '') ?>
               </div>
               <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="terminos">
