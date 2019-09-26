@@ -1,5 +1,51 @@
 <?php
+	require('funciones/autoload.php');
 
+	//var_dump($_POST);
+	//var_dump($_FILES);
+
+	$errorArchivo = '';
+
+	if ($_POST) {
+		$email = $_POST['email'];
+		$password = $_POST['password'];
+		$nombreArchivo = '';
+		//verifico si el archivo se subio al temporal de php
+		if ($_FILES['avatar']['error'] === 0) {
+
+			$ext = pathinfo($_FILES['avatar']['name'], PATHINFO_EXTENSION);
+
+			if ($ext != 'png' && $ext != 'jpg' && $ext != 'jpeg') {
+				$errorArchivo = 'Formato de archivo invalido';
+			} else {
+				$nombreArchivo = subirAvatar($_FILES['avatar'], $email);
+			}
+		}
+
+		//deberia hacerse solo si no hay errores
+
+		$usuario = [
+			'email' => $email,
+			'password' => password_hash($password, PASSWORD_DEFAULT),
+			'avatar' => $nombreArchivo,
+		];
+
+		if (!file_exists('database')) {
+			mkdir('database');
+		}
+		//me traigo el archivo entero
+		$archivo = file_get_contents('database/usuarios.json');
+
+		$usuarios = json_decode($archivo, true);
+
+		$usuarios[] = $usuario;
+
+		$usuariosJson = json_encode($usuarios);
+
+		file_put_contents('database/usuarios.json', $usuariosJson);
+
+		header('location:login.php');
+	}
 
 ?>
 <!DOCTYPE html>
@@ -42,12 +88,13 @@
               <div class="form-group">
                 <label for="avatar">Subir avatar</label>
                 <input type="file"  id="avatar" name="avatar">
+				<?= $errorArchivo ?>
               </div>
               <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="terminos" name="terminos">
                 <label class="form-check-label" for="terminos">Acepto terminos y condiciones</label>
               </div>
-              <button type="submit" class="btn btn-primary">Ingresar</button>
+              <button type="submit" class="btn btn-primary">Registrarme</button>
             </form>
 		</div>
 

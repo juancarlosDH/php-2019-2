@@ -15,10 +15,24 @@
 
     if ($_POST) {
         $email = trim($_POST['email']);
+        $password = $_POST['password'];
         $errores = validarLogin($_POST);
 
         if (!$errores) {
-            header('location:miPerfil.php');
+
+            $archivo = file_get_contents('database/usuarios.json');
+            $usuarios = json_decode($archivo, true);
+
+            foreach ($usuarios as $usuario) {
+                if ($usuario['email'] == $email && password_verify($password, $usuario['password'])) {
+                    //aqui es donde encontré al usuario y lo logeo
+
+                    //luego redirijo a miPerfil
+                    header('location:miPerfil.php');
+                }
+            }
+            $errores['email'] = 'Usuario o clave incorrectos';
+
         }
     }
 
