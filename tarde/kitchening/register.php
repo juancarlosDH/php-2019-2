@@ -30,19 +30,27 @@
 			'avatar' => $nombreArchivo,
 		];
 
-		if (!file_exists('database')) {
-			mkdir('database');
-		}
-		//me traigo el archivo entero
-		$archivo = file_get_contents('database/usuarios.json');
+		$datos = [
+			'team' => 'grupo1',
+			'commission' => 'tarde',
+			'json_data' => $usuario,
+		];
 
-		$usuarios = json_decode($archivo, true);
+		$usuario = peticionCurl('http://apiusers.juancarlosdh.dhalumnos.com/api/users', 'POST', $datos);
 
-		$usuarios[] = $usuario;
-
-		$usuariosJson = json_encode($usuarios);
-
-		file_put_contents('database/usuarios.json', $usuariosJson);
+		// if (!file_exists('database')) {
+		// 	mkdir('database');
+		// }
+		// //me traigo el archivo entero
+		// $archivo = file_get_contents('database/usuarios.json');
+		//
+		// $usuarios = json_decode($archivo, true);
+		//
+		// $usuarios[] = $usuario;
+		//
+		// $usuariosJson = json_encode($usuarios);
+		//
+		// file_put_contents('database/usuarios.json', $usuariosJson);
 
 		header('location:login.php');
 	}

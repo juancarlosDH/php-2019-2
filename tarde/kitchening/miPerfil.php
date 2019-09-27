@@ -6,4 +6,4 @@ if(!estaElUsuarioLogeado()){
     header('location:login.php');
 }
 
-echo 'Bienvenido Usuario';
+echo 'Bienvenido ' . $_SESSION['email'];

@@ -1,6 +1,11 @@
 <?php
     require_once('funciones/autoload.php');
 
+    if (isset($_COOKIE['recuerdame'])) {
+        $_SESSION['email'] = $_COOKIE['recuerdame'];
+        $_SESSION['avatar'] = '';
+    }
+
     if(estaElUsuarioLogeado()){
         header('location:miPerfil.php');
     }
@@ -26,7 +31,14 @@
             foreach ($usuarios as $usuario) {
                 if ($usuario['email'] == $email && password_verify($password, $usuario['password'])) {
                     //aqui es donde encontré al usuario y lo logeo
+                    $_SESSION['email'] = $email;
+                    $_SESSION['avatar'] = $usuario['avatar'];
 
+                    //si checkaron el recuerdame
+                    if (isset($_POST['recuerdame'])) {
+                        //guardo la cookie del email
+                        setcookie('recuerdame', $email, time() + 60*60*24*7 );
+                    }
                     //luego redirijo a miPerfil
                     header('location:miPerfil.php');
                 }
@@ -74,8 +86,8 @@
                 <?= (isset($errores['password']) ? $errores['password'] : '') ?>
               </div>
               <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="terminos">
-                <label class="form-check-label" for="terminos">Dejarme Conectado</label>
+                <input type="checkbox" name="recuerdame" class="form-check-input" id="recuerdame">
+                <label class="form-check-label" for="recuerdame">Dejarme Conectado</label>
               </div>
               <button type="submit" class="btn btn-primary">Ingresar</button>
             </form>
