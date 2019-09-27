@@ -1,4 +1,6 @@
 <?php
+
+    require_once('funciones/autoload.php');
     $errorEmail = '';
     $errorPassword = '';
 
@@ -18,23 +20,35 @@
             $errorPassword = 'Ingresa tu password';
         }
 
-        //levanto mi archivo en formato json
-        $archivo = file_get_contents('usuarios.json');
-        //lo transformo a variables en php
-        $usuario = json_decode($archivo, true);
+        if (empty($errorEmail) && empty($errorPassword)) {
+            //levanto mi archivo en formato json
+            $archivo = file_get_contents('usuarios.json');
+            //lo transformo a variables en php
+            $usuarios = json_decode($archivo, true);
+            //recorro al array de usuarios
+            foreach ($usuarios as $usuario) {
+                if ($usuario['email'] == $email && password_verify($password, $usuario['password'])) {
+                    //aqui encontré al usuario y lo logueo
+                    $_SESSION['email'] = $usuario['email'];
+                    $_SESSION['avatar'] = $usuario['avatar'];
+                    $_SESSION['admin'] = $usuario['admin'];
+                    $_SESSION['id'] = $usuario['id'];
 
-        if ($usuario['email'] == $email && password_verify($password, $usuario['password'])) {
-            
-        } else {
+                    //pregunto si envie el mantenerme logeado
+                    if(isset($_POST['mantenerme'])) {
+                        //creo una cookie que va a durar 30 dias
+                        setcookie('email', $email, time() + 60*60*24*30);
+                    }
+
+                    //luego lo redirijo a miPerfil
+                    header('location:miPerfil.php');
+                }
+            }
             $errorEmail = 'Usuario o clave invalidos';
         }
 
-        if (empty($errorEmail) && empty($errorPassword)) {
-            header('location:miPerfil.php?email=' . $email);
-        }
     }
 
-    require_once('funciones/productos.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -58,6 +72,7 @@
 		<div class="form-login">
 
             <?php
+                var_dump($_POST);
                 echo $errorEmail;
                 echo '<br>' . $errorPassword;
             ?>
@@ -74,8 +89,8 @@
                 <input type="password" class="form-control" id="password" placeholder="Password" name="password">
               </div>
               <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="terminos">
-                <label class="form-check-label" for="terminos">Dejarme Conectado</label>
+                <input type="checkbox" name="mantenerme" class="form-check-input" id="mantenerme" value="1">
+                <label class="form-check-label" for="mantenerme">Dejarme Conectado</label>
               </div>
               <button type="submit" class="btn btn-primary">Ingresar</button>
             </form>

@@ -1,5 +1,5 @@
 <?php
-    require_once('funciones/productos.php');
+    require_once('funciones/autoload.php');
 
     // var_dump($_POST);
     // var_dump($_FILES);
@@ -24,18 +24,29 @@
             }
         }
 
-        //formar los datos del usuario
-        $usuario = [
-            'email' => $email,
-            'password' => password_hash($password, PASSWORD_DEFAULT),
-            'avatar' => $nombreArchivo,
-        ];
+
 
         //levanto mi archivo en formato json
         $archivo = file_get_contents('usuarios.json');
         //lo transformo a variables en php
         $usuarios = json_decode($archivo, true);
-        
+        $id = 0;
+        foreach ($usuarios as $usuario) {
+            if ($usuario['id'] > $id) {
+                $id = $usuario['id'];
+            }
+        }
+        $id++;
+
+        //formar los datos del usuario
+        $usuario = [
+            'email' => $email,
+            'password' => password_hash($password, PASSWORD_DEFAULT),
+            'avatar' => $nombreArchivo,
+            'admin' => false,
+            'id' => $id,
+        ];
+
         //agrego el usuario nuevo al array del json
         $usuarios[] = $usuario;
         //convierto ese usuario en JSON para luego mandarlo a guardar

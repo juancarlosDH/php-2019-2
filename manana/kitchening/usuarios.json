@@ -1,5 +1,6 @@
 [
-    {"email":"prueba@prueba.com","password":"$2y$10$YvmbNLLLBlNQh6NewfhOu.F4GiWLosGuBDQf3gRT7xsgE6rg8ygx2","avatar":"prueba@prueba.com.png"},
-    {"email":"prueba@prueba.com","password":"$2y$10$YvmbNLLLBlNQh6NewfhOu.F4GiWLosGuBDQf3gRT7xsgE6rg8ygx2","avatar":"prueba@prueba.com.png"},
-    {"email":"prueba@prueba.com","password":"$2y$10$YvmbNLLLBlNQh6NewfhOu.F4GiWLosGuBDQf3gRT7xsgE6rg8ygx2","avatar":"prueba@prueba.com.png"}
+    {"email":"prueba@prueba.com","password":"$2y$10$YvmbNLLLBlNQh6NewfhOu.F4GiWLosGuBDQf3gRT7xsgE6rg8ygx2","avatar":"prueba@prueba.com.png","admin":true,"id":4},
+    {"email":"prueba2@prueba.com","password":"$2y$10$YvmbNLLLBlNQh6NewfhOu.F4GiWLosGuBDQf3gRT7xsgE6rg8ygx2","avatar":"prueba@prueba.com.png","admin":false,"id":2},
+    {"email":"prueba3@prueba.com","password":"$2y$10$YvmbNLLLBlNQh6NewfhOu.F4GiWLosGuBDQf3gRT7xsgE6rg8ygx2","avatar":"prueba@prueba.com.png","admin":false,"id":3},
+    {"email":"juan@juan.com","password":"$2y$10$OFKyt0L43YNj5xKAtlbMluduU9k4eAj0SFVSRKmZWq0hSqQhQt1XK","avatar":"","admin":false,"id":5}
 ]

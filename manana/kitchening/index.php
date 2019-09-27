@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-    require_once('funciones/productos.php');
+    require_once('funciones/autoload.php');
 
     $productos = dameProductos();
 
