@@ -1,18 +1,17 @@
 <?php
 
-function buscarUsuarioEmail($email) {
+function buscarUsuarioEmail(string $email) {
 
-    $usuario = [];
+    $archivo = file_get_contents('database/usuarios.json');
+    $usuarios = json_decode($archivo, true);
 
-    $datos = [ 'team' => 'grupo1', 'commission' => 'tarde', 'search' => $email];
+    foreach ($usuarios as $usuario) {
+        if ($usuario['email'] == $email) {
+            return $usuario;
+        }
+    }
 
-    $usuario = peticionCurl('http://apiusers.juancarlosdh.dhalumnos.com/api/users', 'GET', $datos);
-    //var_dump($usuario); exit;
-    $usuario = (count($usuario['data']) > 0)
-        ? json_decode($usuario['data'][0]['json_data'], true)
-        : [];
-
-    return $usuario;
+    return [];
 }
 
 function subirAvatar($archivo, $nombre) {
@@ -30,7 +29,23 @@ function subirAvatar($archivo, $nombre) {
     return $nombreArchivo;
 }
 
+function guardarUsuario(array $usuario) {
 
+    if (!file_exists('database')) {
+        mkdir('database');
+    }
+    //me traigo el archivo entero
+    $archivo = file_get_contents('database/usuarios.json');
+
+    $usuarios = json_decode($archivo, true);
+    
+    $usuarios[] = $usuario;
+
+    $usuariosJson = json_encode($usuarios);
+
+    file_put_contents('database/usuarios.json', $usuariosJson);
+
+}
 
 
 

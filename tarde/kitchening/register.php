@@ -1,8 +1,13 @@
 <?php
 	require('funciones/autoload.php');
 
-	//var_dump($_POST);
-	//var_dump($_FILES);
+	if (isset($_COOKIE['recuerdame'])) {
+        logear($_COOKIE['recuerdame']);
+    }
+
+	if(estaElUsuarioLogeado()){
+        header('location:miPerfil.php');
+    }
 
 	$errorArchivo = '';
 
@@ -30,27 +35,17 @@
 			'avatar' => $nombreArchivo,
 		];
 
-		$datos = [
-			'team' => 'grupo1',
-			'commission' => 'tarde',
-			'json_data' => $usuario,
-		];
+		// $datos = [
+		// 	'team' => 'grupo1',
+		// 	'commission' => 'tarde',
+		// 	'json_data' => $usuario,
+		// ];
+		//
+		// $usuario = peticionCurl('http://apiusers.juancarlosdh.dhalumnos.com/api/users', 'POST', $datos);
 
-		$usuario = peticionCurl('http://apiusers.juancarlosdh.dhalumnos.com/api/users', 'POST', $datos);
+		guardarUsuario($usuario);
 
-		// if (!file_exists('database')) {
-		// 	mkdir('database');
-		// }
-		// //me traigo el archivo entero
-		// $archivo = file_get_contents('database/usuarios.json');
-		//
-		// $usuarios = json_decode($archivo, true);
-		//
-		// $usuarios[] = $usuario;
-		//
-		// $usuariosJson = json_encode($usuarios);
-		//
-		// file_put_contents('database/usuarios.json', $usuariosJson);
+		logear($email);
 
 		header('location:login.php');
 	}

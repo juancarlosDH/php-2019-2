@@ -2,8 +2,7 @@
     require_once('funciones/autoload.php');
 
     if (isset($_COOKIE['recuerdame'])) {
-        $_SESSION['email'] = $_COOKIE['recuerdame'];
-        $_SESSION['avatar'] = '';
+        logear($_COOKIE['recuerdame']);
     }
 
     if(estaElUsuarioLogeado()){

@@ -1,6 +1,6 @@
 <?php
+require_once('funciones/autoload.php');
 
-session_start();
-session_destroy();
-setcookie('recuerdame', '', time()-1);
+deslogear();
+
 header('location:login.php');
