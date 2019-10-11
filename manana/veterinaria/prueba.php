@@ -18,7 +18,7 @@ $elTercero = (new Mascota())
 
 $elTercero->setEspecie($especiePerro);
 
-$especiePerro->setNombre('gavilan');
+$especiePerro->setNombre('gavilan');Por ahora
 
 echo $elTercero->getDescripcion();
 

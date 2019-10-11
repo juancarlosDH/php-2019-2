@@ -4,7 +4,7 @@ class Especie {
     private $nombre;
 
     public function __construct(string $nombre){
-        $this->setNombre($nombre);
+        $this->nombre = $nombre;
     }
 
     public function setNombre(string $nombre)
