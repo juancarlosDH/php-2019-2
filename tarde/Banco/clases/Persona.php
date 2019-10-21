@@ -9,13 +9,13 @@ class Persona extends Cliente
     private $documento;
     private $nacimiento;
 
-    public function __construct($nombre, $apellido, $documento, $nacimiento, $email, $pass)
+    public function __construct($nombre, $apellido, $documento, $nacimiento, $email, $pass, Cuenta $cuenta)
     {
         $this->nombre = $nombre;
         $this->apellido = $apellido;
         $this->documento = $documento;
         $this->nacimiento = $nacimiento;
-        parent::__construct($email, $pass);
+        parent::__construct($email, $pass, $cuenta);
      }
 
      public function setNombre($nombre){

@@ -14,9 +14,19 @@ abstract class Cuenta
 
     abstract public function debitar(float $monto, string $origen);
 
+    public function getBalance()
+    {
+        return $this->balance;
+    }
 
+    public function setBalance($monto)
+    {
+        $this->balance = $monto;
+    }
 
-
-
+    public function acreditar($monto)
+    {
+        $this->balance = $this->balance + $monto;
+    }
 
 }
