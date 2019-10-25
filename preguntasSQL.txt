@@ -1,0 +1,7 @@
+Que es una BD
+Que necesitamos para conectarnos a una BD Mysql
+Que es SQL
+Cuando diseñamos los modelos cuales elementos existen?
+Que hacemos con el DER?
+Si queremos registrar un usuario a la BD, cual seria la sentencia SQL?
+Para alterar el precio de un producto como lo hacemos en SQL?

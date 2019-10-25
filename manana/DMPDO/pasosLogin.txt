@@ -1,0 +1,16 @@
+Cuando ingreso a login que deberia de pasar?
+
+Preguntar si hay un usuario logeado.
+
+Formulario para logeo, con email y password.
+
+El ValidadorLogin verifica:
+    Si el email es de formato valido.
+    Si la password no está vacia.
+    Si esta todo bien:
+        Debiría de pedirle a la Base de Datos si el email existe.
+            Si existe verifico la clave con password_verify.
+            Si no coincide "Usuario Erroneo";
+            Pero si coincide:
+                Instancio al Usuario.
+                Le pido al Autenticador que logee al Usuario.
