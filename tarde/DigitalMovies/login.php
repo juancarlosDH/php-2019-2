@@ -1,26 +1,29 @@
 <?php
 require('conexion.php');
+require_once('clases/autoload.php');
+
 $email = '';
 $errorEmail = '';
 $invalidError = '';
+$errores = [];
+
 if($_POST){
     $email = $_POST['email'];
     $pass = $_POST['password'];
 
-    $validator = $conex->query("");
-    $cantidad = $validator->rowCount();
-    // var_dump($cantidad);exit;
-    if($cantidad==0){
-        $errorEmail = 'Usuario o Email Incorrectos';
-        $invalidError = 'is-invalid';
-    } else {
-        $usuario = $validator->fetch(PDO::FETCH_ASSOC);
-        if(!password_verify($pass, $usuario['password'])){
-            $errorEmail = 'Usuario o Email Incorrectos';
-            $invalidError = 'is-invalid';
-        }else{
-            header('location:miPerfil.php');
-        }
+    $bd = new BaseDatos;
+    $validador = new Validador($bd);
+    $errores = $validador->validarLogin($email, $pass);
+
+    if (empty($errores)) {
+        $usuario = $bd->buscarUsuarioEmail($email);
+
+        //iniciar session
+        $auth = new Autenticador;
+        $auth->logear($usuario);
+
+        //redirijir a mi prefil
+        header('location:index.php');
     }
 
 }
@@ -37,12 +40,13 @@ if($_POST){
               <form method="post">
                   <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control <?= $invalidError ?>" id="email" placeholder="Tu Email" name="email" value="<?= $email ?>">
-                    <div class="invalid-feedback"><?= $errorEmail ?></div>
+                    <input type="text" class="form-control <?= isset($errores['email']) ? 'is-invalid' : '' ?>" id="email" placeholder="Tu Email" name="email" value="<?= $email ?>">
+                    <div class="invalid-feedback"><?= $errores['email'] ?? '' ?></div>
                   </div>
                   <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Tu Password" name="password">
+                    <input type="password" class="form-control  <?= isset($errores['password']) ? 'is-invalid' : '' ?>" id="password" placeholder="Tu Password" name="password">
+                    <div class="invalid-feedback"><?= $errores['password'] ?? '' ?></div>
                   </div>
                   <div class="form-group">
                       <input type="checkbox" name="rememberme" id="rememberme">

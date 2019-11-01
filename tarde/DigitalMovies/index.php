@@ -1,4 +1,6 @@
 <?php
+    require_once('clases/autoload.php');
+
     require_once('plantilla/header.php');
     require_once('plantilla/menu.php');
  ?>
