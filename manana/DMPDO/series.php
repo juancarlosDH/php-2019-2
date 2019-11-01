@@ -1,6 +1,6 @@
 <?php
     require_once('conexion.php');
-
+    //RUUUUUUUUUUUUUUMBAAAA
     $sql = 'SELECT s.*, g.name FROM series AS s
     INNER JOIN genres AS g ON s.genre_id = g.id';
 
