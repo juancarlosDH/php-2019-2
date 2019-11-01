@@ -87,7 +87,9 @@
         <p class="card-text">Rating: <?= $pelicula['rating'] ?></p>
         <p class="card-text">Awards: <?= $pelicula['awards'] ?></p>
         <p class="card-text">
-          <a class="btn btn-primary" href="">Ver Mas</a>
+          <a class="btn btn-primary"
+            href="pelicula.php?peli_id=<?= $pelicula['id']?>"
+            >Ver Mas</a>
           <a class="btn btn-success" href="">Editar</a>
           </p>
       </div>

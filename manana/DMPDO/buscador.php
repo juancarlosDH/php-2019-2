@@ -7,8 +7,14 @@ $resultadoBusqueda=[];
 $errorBusqueda='';
 $tipo='';
 $cantidad = 0;
-$query = $conex->query("SELECT * FROM genres");
-$generos = $query->fetchAll(PDO::FETCH_ASSOC);
+
+$sql = 'SELECT * FROM genres';
+$sentencia = $conex->prepare($sql);
+$sentencia->execute();
+$generos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+
+
+
 
 if (isset($_GET['tipo'])) {
     $titulo=trim($_GET['title']);
@@ -78,9 +84,9 @@ if (isset($_GET['tipo'])) {
             <select name="genero">
                 <option value="">Todos</option>
                 <?php
-                foreach ($generos as $genero) {
-                echo "<option value='{$genero['id']}'>".$genero['name']."</option>";
-                }
+                foreach ($generos as $genero) { ?>
+                    <option value="<?= $genero['id'] ?>"><?= $genero['name'] ?></option>
+                <?php }
                  ?>
             </select>
             <button class="btn btn-primary" type="submit">Buscar</button>

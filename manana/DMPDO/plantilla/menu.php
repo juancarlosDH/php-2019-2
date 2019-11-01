@@ -13,7 +13,7 @@
     <ul class="izquierdos navigation-ul">
       <a href="#"><li>Recientes</li></a>
       <a href="peliculas.php"><li>Películas</li></a>
-      <a href="#"><li>Series</li></a>
+      <a href="series.php"><li>Series</li></a>
     </ul>
     <ul class="derechos navigation-ul">
       <a href="buscador.php"><li>Buscar</li></a>
