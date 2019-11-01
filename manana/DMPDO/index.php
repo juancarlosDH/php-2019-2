@@ -2,8 +2,6 @@
 
     require_once('clases/autoload.php');
 
-    var_dump($_SESSION); exit;
-
     require_once('plantilla/header.php');
     require_once('plantilla/menu.php');
 

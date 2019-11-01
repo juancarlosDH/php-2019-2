@@ -1,7 +1,7 @@
 <?php
     require('conexion.php');
 
-    $offset = 0;
+    $offset = 0; $limite = 2;
     if (isset($_GET['pagina'])) {
         if ($_GET['pagina']==1) {
             $offset = 0;
@@ -11,15 +11,28 @@
         }
     }
 
+    //voy a resolver el paginador
+    //pedirle a Mysql que me de la cantidad de Peliculas
+    $sql = 'SELECT id FROM movies';
+    $sentencia = $conex->prepare($sql);
+    $sentencia->execute();
+    $cantidad = $sentencia->rowCount();
+    //dividir entre el limit que le seteo
+    $paginas = ceil($cantidad / $limite);
 
+    //obtengo las pelis
     $sql = 'SELECT m.id, title, awards, rating, name AS nombreGenero
-FROM movies AS m, genres
-WHERE genre_id = genres.id
-ORDER BY title ASC
-LIMIT 6 OFFSET ' . $offset . ';';
+            FROM movies AS m
+            LEFT JOIN genres ON m.genre_id = genres.id
+            ORDER BY m.title ASC
+            LIMIT :limite OFFSET :offset;';
 
-    $query = $conex->query($sql);
-    $resultados = $query->fetchAll(PDO::FETCH_ASSOC);
+    /** @var $sentencia PDOStatement */
+    $sentencia = $conex->prepare($sql);
+    $sentencia->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $sentencia->bindValue(':limite', $limite, PDO::PARAM_INT);
+    $sentencia->execute();
+    $resultados = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
     //var_dump($resultados); exit;
 
@@ -49,7 +62,7 @@ LIMIT 6 OFFSET ' . $offset . ';';
                          <span class="sr-only">Previous</span>
                        </a>
                      </li>
-                     <?php for($i = 1; $i <= 4; $i++ ){
+                     <?php for($i = 1; $i <= $paginas; $i++ ){
                        echo '<li class="page-item"><a class="page-link" href="">'.$i.'</a></li>';
                      }
                       ?>

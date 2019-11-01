@@ -10,18 +10,36 @@ if($_POST){
     $email = $_POST['email'];
     $pass = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    //buscar el email repetido
-    $validator = $conex->query("");
-    $cantidad = $validator->rowCount();
-    // var_dump($cantidad);exit;
-    if($cantidad==0){
-        $query = $conex->query("");
-        $query->execute();
 
+    //voy a validar que el user no este registrado o repetido
+    $sql = 'SELECT * FROM users WHERE email = :email;';
+    //preparo la consulta
+    $sentencia = $conex->prepare($sql);
+    //bindeo los placeholders
+    $sentencia->bindValue(':email', $email);
+    //ejecuto la consulta
+    $sentencia->execute();
+    //solo necesito si hay algun registro en la tabla con este email
+    $cantidad = $sentencia->rowCount();
 
-    } else {
-        $errorEmail = 'El mail existe';
+    if ($cantidad != 0) {
+        $errorEmail = 'El Email ya esta registrado';
         $invalidError = 'is-invalid';
+    } else {
+
+        //creo la sql
+        $sql = 'INSERT INTO users ( name, email, password)
+                VALUES (:nombre, :email, :pass);';
+        //preparo la consulta
+        $sentencia = $conex->prepare($sql);
+        //bindear los placeholders
+        $sentencia->bindValue(':nombre', $nombre);
+        $sentencia->bindValue(':email', $email);
+        $sentencia->bindValue(':pass', $pass);
+        //ejecutar la consulta
+        $sentencia->execute();
+
+        header('location:login.php');
     }
 
 }
